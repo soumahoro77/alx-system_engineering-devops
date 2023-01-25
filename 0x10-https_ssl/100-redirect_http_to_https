@@ -39,19 +39,16 @@ defaults
 
 frontend http
         bind *:80
-        http-request set-header X-Forwar
+        http-request set-header X-Forwarded-Proto http
+        default_backend web-backend
 
 frontend www-https
-        bind *:443 ssl crt /eded-Proto http
-        default_backend web-backendtc/haproxy/ssl/www.luisch.tech.pem
+        bind *:443 ssl crt /etc/haproxy/ssl/www.luisch.tech.pem
         http-request set-header X-Forwarded-Proto https
-        d      balance roundrobin
-        redirect scheme https code 301 if !{ ssl_fc }
-        server 11303-efault_backend web-backend
+        default_backend web-backend
 
 backend web-backend
-  web-01 54.90.51.55 check
-        server 79010-web-02 100.25.109.225 check
-
-backend letsencrypt-backend
-        server letsencrypt 127.0.0.1:54321
+        balance roundrobin
+        redirect scheme https code 301 if !{ ssl_fc }
+        server 938-web-01 35.231.33.237:80 check
+        server 938-web-02 34.74.155.163:80 check
